@@ -72,9 +72,18 @@ export const AppWebhooksDisplay = ({ appId, ...boxProps }: AppWebhooksDisplayPro
   }
 
   if (webhooksData?.app?.webhooks) {
+    const expandableItemsIds = webhooksData.app.webhooks
+      .filter(wh => (wh.eventDeliveries?.edges?.length || 0) > 0)
+      .map(wh => wh.id);
+
     return (
       <Wrapper {...boxProps}>
-        <Accordion __marginLeft="-24px" __width="calc(100% + 48px)">
+        <Accordion
+          __marginLeft="-24px"
+          __width="calc(100% + 48px)"
+          type="multiple"
+          defaultValue={expandableItemsIds}
+        >
           {webhooksData.app.webhooks.map((wh, index) => {
             const isLastWebhook = index === (webhooksData?.app?.webhooks ?? []).length - 1;
             const events = [...wh.asyncEvents, ...wh.syncEvents].flatMap(e => e.name).join(", ");
