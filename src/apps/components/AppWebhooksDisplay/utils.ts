@@ -1,6 +1,6 @@
 import { AppWebhookDeliveriesQuery } from "@dashboard/graphql";
 
-type Webhook = NonNullable<NonNullable<AppWebhookDeliveriesQuery["app"]>["webhooks"]>[0];
+export type Webhook = NonNullable<NonNullable<AppWebhookDeliveriesQuery["app"]>["webhooks"]>[0];
 
 export const sortWebhooksByFailedDeliveries = (webhookOne: Webhook, webhookTwo: Webhook) => {
   const deliveriesOne = webhookOne.eventDeliveries?.edges?.length ?? 0;
